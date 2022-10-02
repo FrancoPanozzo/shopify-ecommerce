@@ -14,5 +14,6 @@ export async function getStaticProps() {
 export default function Home({
   products,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  return <div>{products}</div>
+  console.log(products)
+  return <div>Console</div>
 }
