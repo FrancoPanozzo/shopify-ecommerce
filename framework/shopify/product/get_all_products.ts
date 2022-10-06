@@ -1,14 +1,18 @@
 import { ProductConnection } from './../schema.d'
 import getAllProductsQuery from '../utils/queries/get_all_products'
+import { normalizeProduct } from '../utils/normalize'
 import fetchApi from '../utils/fetch_api'
 
+type ReturnType = {
+  products: ProductConnection
+}
+
 async function getAllProducts(): Promise<any> {
-  const products = await fetchApi<ProductConnection>(getAllProductsQuery)
+  const data = await fetchApi<ReturnType>(getAllProductsQuery)
 
   return (
-    products.edges.map((e) => {
-      return e.node
-    }) ?? []
+    // Normalize data: Return a simple array of products
+    data.products.edges.map((e) => normalizeProduct(e.node)) ?? []
   )
 }
 
